@@ -1,0 +1,87 @@
+.signIn {
+  background-color: #fff;
+  color: rgb(34, 54, 68);
+  width: 100vw;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.signIn__container {
+  background-color: rgba(55, 148, 174, 0.3);
+  padding: 40px;
+  min-width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  border-radius: 5px;
+}
+
+.close {
+  padding: 5px 5px 0 5px;
+  float: right;
+}
+
+.signIn__title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 20px;
+}
+
+/* SIGN IN FORM */
+.signIn__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.signIn__Block {
+}
+/* SIGN IN FORM-END */
+.actions {
+  padding-top: 50px;
+}
+
+.signIn__action_btn {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: rgba(34, 54, 68, 0.8);
+  /* background-color: rgb(255, 255, 255, 0.4); */
+  background-color: transparent;
+  border-bottom: 1px solid rgb(34, 54, 68);
+  border-radius: 0;
+  padding: 5px;
+  float: right;
+}
+
+.signIn__action_btn:hover,
+.signIn__action_btn:focus {
+  border-bottom: 1px solid rgb(222, 143, 16);
+  color: rgb(222, 143, 16);
+  background: transparent;
+  /* background: rgba(255, 255, 255, 0.6); */
+}
+
+.signInInput {
+  padding: 10px;
+  line-height: 2;
+  width: 100%;
+  border-bottom: 1px solid rgb(34, 54, 68);
+}
+
+.signInInput:focus {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.signIn__submit {
+  /* border-radius: 0; */
+}
+
+/* form styles */
+.invalidInput {
+  color: red;
+  border-color: red;
+}

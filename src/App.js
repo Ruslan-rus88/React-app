@@ -1,24 +1,90 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react"
+import ErrorModal from "./components/errorModal/errorModal"
+import Users from "./components/users/users"
+import UsersUseReducer from "./components/users/usersUseReducer"
+import UseRefExample from "./components/useRef/useRefExample"
+import UseEffectExample from "./components/useEffect/useEffectExample"
+import UseReducerExample from "./components/useReducer/useReducerExample"
+import MainHeader from "./components/header/mainHeader"
+import Home from "./components/home/home"
+import SignIn from "./components/signIn/signIn"
+import navContext from "./context/navContext"
 
 function App() {
+  const [error, setError] = useState(null)
+  const [activePage, setActivePage] = useState("")
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [loggedUser, setLoggedUser] = useState({})
+
+  const resetError = () => setError(null)
+
+  const navBarPages = ["Home", "Users", "Users(useReducer)", "UseRef", "UseEffect", "UseReducer"]
+
+  useEffect(() => {
+    let active_page = localStorage.getItem("activePage")
+    if (active_page === null) {
+      setActivePage("Home")
+      localStorage.setItem("activePage", JSON.stringify("Home"))
+    } else if (activePage === "") {
+      setActivePage(JSON.parse(active_page))
+    } else {
+      localStorage.setItem("activePage", JSON.stringify(activePage))
+    }
+  }, [activePage])
+
+
+  /*  update the value of navContext   */
+  const setLoggedUserFunction = (user) => {
+    setLoggedUser(user)
+  }
+
+  const setNavPageFunction = (page) => {
+    setActivePage(page)
+  }
+
+  const setIsLoggedInFunction = (val) => {
+    setIsLoggedIn(val);
+  }
+  /*  update the value of navContext   */
+
+  useEffect(() => {
+    let user = localStorage.getItem("loggedUser")
+    user = JSON.parse(user)
+    if (user) {
+      setLoggedUser(user)
+      setIsLoggedIn(true)
+    }
+    console.log("user:", user);
+  }, [setIsLoggedIn])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <navContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        loggedUser: loggedUser,
+        setLoggedUser: setLoggedUserFunction,
+        setIsLoggedIn: setIsLoggedInFunction,
+        navPage: activePage,
+        setNavPage: setNavPageFunction,
+        navBarPages: navBarPages,
+      }}>
+      <MainHeader navBarPages={navBarPages} />
+
+      {error &&
+        <ErrorModal
+          title={error.title}
+          errorMessage={error.errorMessage}
+          resetError={resetError} />}
+
+      {activePage === "Home" && <Home />}
+      {activePage === "Sign in" && <SignIn />}
+      {activePage === "Users" && <Users setError={setError} />}
+      {activePage === "Users(useReducer)" && <UsersUseReducer setError={setError} />}
+      {activePage === "UseRef" && <UseRefExample />}
+      {activePage === "UseEffect" && <UseEffectExample />}
+      {activePage === "UseReducer" && <UseReducerExample />}
+
+    </navContext.Provider>
   );
 }
 
