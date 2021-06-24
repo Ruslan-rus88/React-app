@@ -1,0 +1,68 @@
+@import "../../index";
+
+.countryCard {
+  background-color: rgb(160, 202, 215);
+  color: $main-color-dark;
+  padding: 30px;
+  box-sizing: border-box;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 70px;
+  min-height: calc(100vh - 70px);
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   flex-direction: column;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.flag_box {
+  position: relative;
+  display: block;
+  width: 200px;
+  height: 150px;
+  margin-bottom: 20px;
+  z-index: 1;
+
+  transition: 1s;
+}
+
+.flag_box:hover {
+  //   position: absolute;
+  width: 100%;
+  left: 0;
+}
+.flag_box:hover ~ .list {
+  display: none;
+}
+.flag_box:hover ~ .button {
+  display: none;
+}
+.flag {
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
+.list {
+}
+.item {
+  display: block;
+  margin-bottom: 10px;
+}
+.subTitle {
+  color: $main-color-light;
+  text-align: right;
+  position: relative;
+  padding: 5px;
+}
+
+.button {
+  margin-top: 50px;
+  min-width: 200px;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react"
-import "./users.css"
+import "./users.scss"
 import { v4 as uuid } from 'uuid';
 import { VscTrash } from "react-icons/vsc";
 

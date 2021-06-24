@@ -1,5 +1,5 @@
 import React, { useReducer, useContext } from "react"
-import css from "./signIn.module.css"
+import css from "./signIn.module.scss"
 import { VscClose } from "react-icons/vsc";
 import NavContext from "../../context/navContext";
 import SignUpForm from "./signUpForm";

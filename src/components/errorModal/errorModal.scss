@@ -1,4 +1,4 @@
-@import "../../styles/base.css";
+/* @import "../../styles/base.css"; */
 
 .error__container {
   position: absolute;
@@ -15,7 +15,7 @@
   position: absolute;
   min-height: 100vh;
   width: 100vw;
-  background-color: rgb(19, 18, 18, 0.8);
+  background-color: rgba(19, 18, 18, 0.8);
   z-index: 2;
 }
 .error__wrapper {

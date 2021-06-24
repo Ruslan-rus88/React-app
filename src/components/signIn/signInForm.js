@@ -1,5 +1,5 @@
 import React, { useReducer, useContext, useEffect } from 'react'
-import css from "./signIn.module.css"
+import css from "./signIn.module.scss"
 import NavContext from '../../context/navContext'
 
 const initialState = {

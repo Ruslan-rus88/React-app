@@ -9,6 +9,7 @@ import MainHeader from "./components/header/mainHeader"
 import Home from "./components/home/home"
 import SignIn from "./components/signIn/signIn"
 import navContext from "./context/navContext"
+import Countries from "./components/countries/countries"
 
 function App() {
   const [error, setError] = useState(null)
@@ -18,7 +19,8 @@ function App() {
 
   const resetError = () => setError(null)
 
-  const navBarPages = ["Home", "Users", "Users(useReducer)", "UseRef", "UseEffect", "UseReducer"]
+  // const navBarPages = ["Home", "Countries", "Users", "Users(useReducer)", "UseRef", "UseEffect", "UseReducer"]
+  const navBarPages = ["Home", "Countries", "Users"]
 
   useEffect(() => {
     let active_page = localStorage.getItem("activePage")
@@ -77,13 +79,13 @@ function App() {
           resetError={resetError} />}
 
       {activePage === "Home" && <Home />}
+      {activePage === "Countries" && <Countries />}
       {activePage === "Sign in" && <SignIn />}
       {activePage === "Users" && <Users setError={setError} />}
       {activePage === "Users(useReducer)" && <UsersUseReducer setError={setError} />}
       {activePage === "UseRef" && <UseRefExample />}
       {activePage === "UseEffect" && <UseEffectExample />}
       {activePage === "UseReducer" && <UseReducerExample />}
-
     </navContext.Provider>
   );
 }

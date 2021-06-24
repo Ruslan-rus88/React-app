@@ -59,7 +59,7 @@
 
 input:focus {
   /* border: none; */
-  background-color: rgb(123, 78, 5, 0.2);
+  background-color: rgba(123, 78, 5, 0.2);
 }
 
 .users__btn {
@@ -88,7 +88,7 @@ input:focus {
 }
 
 .users__empty {
-  color: rgb(245, 242, 237);
+  color: rgba(245, 242, 237, 1);
   margin: 10px auto;
   font-size: 2rem;
 }

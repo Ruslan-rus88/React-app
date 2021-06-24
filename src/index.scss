@@ -1,4 +1,15 @@
-/************ reset ************/
+@import-normalize;
+
+//----------- Variables ------------
+$main-color-light: #fff;
+$main-color-dark: rgb(34, 54, 68);
+$bg-color-light: rgba(255, 255, 255, 1);
+$bg-color-light-06: rgba(255, 255, 255, 0.6);
+$bg-color-orange: rgb(222, 143, 16);
+$bg-hover-color-orange: rgb(255, 157, 0);
+//----------- Variables - END ------------
+
+//----------- reset ------------
 html,
 body,
 div,
@@ -123,9 +134,9 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-/************ reset ************/
+//----------- reset - END------------
 
-/************ Basic Styles ************/
+//----------- Basic Styles ------------
 
 input {
   border: none;
@@ -144,8 +155,8 @@ body {
 
 button {
   padding: 10px 20px;
-  background-color: rgb(222, 143, 16);
-  color: rgb(255, 255, 255);
+  background-color: $bg-color-orange;
+  color: $main-color-light;
   border: none;
   font-size: 1.2rem;
   border-radius: 5px;
@@ -155,7 +166,7 @@ button {
 
 button:focus,
 button:hover {
-  background-color: rgb(255, 157, 0);
+  background-color: $bg-hover-color-orange;
   outline: none;
 }
 
@@ -165,4 +176,4 @@ button:hover {
   max-width: 1200px;
 }
 
-/************ Basic Styles ************/
+//----------- Basic Styles - END ------------

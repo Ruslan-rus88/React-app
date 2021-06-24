@@ -1,15 +1,15 @@
-/* @import "../../styles/base.css"; */
+@import "../../index.scss";
 
 .header {
-  height: 70px;
-  background-color: rgb(34, 54, 68);
-  /* */
+  min-height: 70px;
+  height: fit-content;
+  background-color: $main-color-dark;
 }
 
-/* .wrapper {
-  height: 100%;
-  background-color: rgb(9, 36, 27);
-} */
+.header__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .box {
   line-height: 70px;
@@ -18,7 +18,7 @@
   position: relative;
 }
 
-.logo {
+.box__logo {
 }
 
 .logo__title {
@@ -26,7 +26,8 @@
   font-weight: 600;
 }
 
-.navBar__container {
+.box__navBar {
+  flex: 1;
 }
 
 .nav {
@@ -49,11 +50,9 @@
   color: rgb(55, 148, 174);
 }
 
-.login__container {
-  float: right;
+.box__login {
   margin-right: 0;
 }
-
 .button {
   margin-left: 10px;
 }

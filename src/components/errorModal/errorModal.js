@@ -1,5 +1,5 @@
 import React from "react"
-import "./errorModal.css"
+import "./errorModal.scss"
 
 const ErrorModal = ({ title, errorMessage, resetError }) => {
     return <div className="error__container">

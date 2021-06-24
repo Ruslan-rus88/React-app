@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import css from "./home.module.css"
+import css from "./home.module.scss"
 import NavContext from "../../context/navContext"
 import { VscArrowUp } from "react-icons/vsc";
 
