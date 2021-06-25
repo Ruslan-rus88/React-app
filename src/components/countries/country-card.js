@@ -2,56 +2,58 @@ import React from 'react'
 import css from "./country-card.module.scss"
 import { v4 as uuidv4 } from "uuid"
 
-const CountryCard = ({ displayedCountry, setDisplayedCountry, fetchCountriesHandler }) => {
+const CountryCard = ({ displayedCountry, setDisplayedCountry, setRequestedCountry, previousCountriesList }) => {
+
+    const country = displayedCountry;
 
     const closeBtnHandler = () => {
         setDisplayedCountry(undefined);
-        fetchCountriesHandler();
+        setRequestedCountry(previousCountriesList)
     }
 
     return (
         <div className={css.countryCard}>
             <div className="wrapper">
-                <h2 className={css.title}>{displayedCountry.name}</h2>
+                <h2 className={css.title}>{country.name}</h2>
                 <figure className={css.flag_box}>
-                    <img src={displayedCountry.flag} alt={`${displayedCountry.name} flag`} className={css.flag} />
+                    <img src={country.flag} alt={`${country.name} flag`} className={css.flag} />
                 </figure>
                 <ul className={css.list}>
                     <li className={css.item}>
-                        <span className={css.subTitle} > Native Name: </span> {displayedCountry.nativeName}
+                        <span className={css.subTitle} > Native Name: </span> {country.nativeName}
                     </li>
                     <li className={css.item}>
-                        <span className={css.subTitle}>Capital: </span> {displayedCountry.capital}
+                        <span className={css.subTitle}>Capital: </span> {country.capital}
                     </li>
                     <li className={css.item}>
-                        <span className={css.subTitle}>Area: </span> {displayedCountry.area} KM * 2
+                        <span className={css.subTitle}>Area: </span> {country.area} KM * 2
                     </li>
                     <li className={css.item}>
-                        <span className={css.subTitle}>Population: </span> {displayedCountry.population}
+                        <span className={css.subTitle}>Population: </span> {country.population}
                     </li>
                     <li className={css.item}>
                         <span className={css.subTitle} > Calling code:
                         </span>
-                        {displayedCountry.callingCodes.map(code => <span key={uuidv4()}> {code} </span>)}
+                        {country.callingCodes.map(code => <span key={uuidv4()}> {code} </span>)}
                     </li>
                     <li className={css.item}>
                         <span className={css.subTitle} > Time zones:
                         </span>
-                        {displayedCountry.timezones.map((zone, index) => {
+                        {country.timezones.map((zone, index) => {
                             return (<span key={uuidv4()}>{index > 0 ? "," : ""} {zone} </span>)
                         })}
                     </li>
                     <li className={css.item}>
                         <span className={css.subTitle} > Currencies:
                         </span>
-                        {displayedCountry.currencies.map((currency, index) => {
+                        {country.currencies.map((currency, index) => {
                             return (<span key={uuidv4()}>{index > 0 ? "," : ""} {currency.name} ({currency.symbol}) </span>)
                         })}
                     </li>
                     <li className={css.item}>
                         <span className={css.subTitle} > Languages:
                         </span>
-                        {displayedCountry.languages.map((language, index) => {
+                        {country.languages.map((language, index) => {
                             return (<span key={uuidv4()}>{index > 0 ? "," : ""} {language.name} ({language.nativeName}) </span>)
                         })}
                     </li>

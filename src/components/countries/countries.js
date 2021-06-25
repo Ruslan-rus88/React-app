@@ -3,12 +3,13 @@ import css from "./countries.module.scss"
 import { v4 as uuidv4 } from "uuid"
 import CountryCard from './country-card';
 
-const Countries = () => {
-    const [error, setError] = useState(false);
+const Countries = ({ setError }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [inputCountry, setInputCountry] = useState("");
     const [requestedCountry, setRequestedCountry] = useState(undefined);
     const [displayedCountry, setDisplayedCountry] = useState(undefined);
+    // used to save the list before displaying country card, to get it back after closing the card
+    const [previousCountriesList, setPreviousCountriesList] = useState(undefined);
 
     const fetchCountriesHandler = async () => {
         try {
@@ -16,7 +17,7 @@ const Countries = () => {
             const response = await fetch("https://restcountries.eu/rest/v2/all")
 
             if (!response.ok) {
-                throw new Error("something went wrong")
+                throw new Error("Something went wrong")
             }
 
             const data = await response.json()
@@ -27,7 +28,10 @@ const Countries = () => {
             setIsLoading(false)
 
         } catch (error) {
-            setError(error.message)
+            setError({
+                title: "Loading Error", errorMessage: error.message
+            })
+            console.log(error.message);
         }
     }
 
@@ -44,6 +48,28 @@ const Countries = () => {
     useEffect(() => {
         fetchCountriesHandler();
     }, [])
+
+    const filterHandler = (e) => {
+        switch (e.target.value) {
+            case "area":
+                setRequestedCountry([...requestedCountry.sort((a, b) => a.area < b.area ? 1 : a.area > b.area ? -1 : 0)])
+                return;
+            case "population":
+                setRequestedCountry([...requestedCountry.sort((a, b) => a.population < b.population ? 1 : a.population > b.population ? -1 : 0)])
+                return;
+            case "none":
+                fetchCountriesHandler();
+                return;
+            default:
+                return;
+        }
+    }
+
+    const selectCountryHandler = (country) => {
+        setPreviousCountriesList(requestedCountry)
+        setDisplayedCountry(country);
+        setRequestedCountry(undefined)
+    }
 
     return (
         <div className={`${css.countries} wrapper`}>
@@ -64,18 +90,24 @@ const Countries = () => {
                     onChange={handleChange} />
                 <button type="submit" className={css.button}>Find</button>
             </form>
+            <div className={css.options}>
+                <h2 className={css.options__title}>Options:</h2>
+                <label htmlFor="select-filter" className={css.select__label}>Sort by:</label>
+                <select name="select-filter" id="select-filter" className={css.select} onChange={(e) => { filterHandler(e) }}>
+                    <option className={css.select__option} value="none">None</option>
+                    <option className={css.select__option} value="area">Area</option>
+                    <option className={css.select__option} value="population">Population</option>
+                </select>
+            </div>
             {isLoading && <div className={css.loading}>Loading...</div>}
-            {!isLoading &&
+            {!isLoading && requestedCountry &&
                 <React.Fragment>
                     <div className={css.results}>Select the country to find more information about it!</div>
                     <ul className={css.list}>
-                        {requestedCountry && requestedCountry.map(country => {
+                        {requestedCountry.map(country => {
                             return <li
                                 key={uuidv4()}
-                                onClick={() => {
-                                    setDisplayedCountry(country);
-                                    setRequestedCountry([country])
-                                }}
+                                onClick={() => selectCountryHandler(country)}
                                 className={css.item}>
                                 <div className={css.box_country}>
                                     <h3 className={css.countryName}>{country.name}</h3>
@@ -90,7 +122,8 @@ const Countries = () => {
                 <CountryCard
                     displayedCountry={displayedCountry}
                     setDisplayedCountry={setDisplayedCountry}
-                    fetchCountriesHandler={fetchCountriesHandler} />
+                    setRequestedCountry={setRequestedCountry}
+                    previousCountriesList={previousCountriesList} />
             }
         </div >
     )

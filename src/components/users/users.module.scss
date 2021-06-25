@@ -1,3 +1,5 @@
+@import "../../index.scss";
+
 .users {
   width: 100vw;
   padding: 0 10vw;
@@ -6,28 +8,16 @@
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-.users__title {
-  text-align: center;
-  margin: 10px auto;
-  border-radius: 5px;
-  background-color: rgb(255, 255, 255);
-  padding: 10px 20px;
-  display: inline-block;
-  width: fit-content;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: rgb(181, 115, 10);
-}
-
 .users__form {
   background-color: rgb(255, 255, 255);
-  min-width: 500px;
-  padding: 20px;
+  max-width: 500px;
+  padding: 20px 20px 60px 20px;
+  box-sizing: border-box;
   border-radius: 5px;
-  margin: 20px auto 10px auto;
+  margin: 40px auto 0 auto;
 }
 
-.users__form--container {
+.form__container {
   display: flex;
 }
 
@@ -58,7 +48,6 @@
 }
 
 input:focus {
-  /* border: none; */
   background-color: rgba(123, 78, 5, 0.2);
 }
 
@@ -66,17 +55,24 @@ input:focus {
   float: right;
 }
 
+.users__title {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: $main-color-light;
+}
+
 .users__list {
-  min-width: 500px;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 20px auto 0 auto;
 }
 
 .users__item {
   background-color: rgb(255, 255, 255);
   color: rgb(123, 78, 5);
-  min-width: 500px;
+  margin-bottom: 10px;
   padding: 10px 20px;
-  margin: 10px auto;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import "./users.scss"
 import { v4 as uuid } from 'uuid';
 import { VscTrash } from "react-icons/vsc";
+import css from "./users.module.scss"
 // import wrapper from "../helpers/wrapper";
 
 const Users = ({ setError }) => {
@@ -80,10 +80,6 @@ const Users = ({ setError }) => {
         setUsers(usersList);
     }
 
-    // const testHandler = () => {
-    //     console.log(validFirstName, validLastName);
-    // }
-
     return (
         /*     1. <></>
                 2. <Fragment></Fragment> need to import it
@@ -91,47 +87,46 @@ const Users = ({ setError }) => {
                 4. <wrapper></wrapper>  in this example wrapper is not necessary (it used to return children without returning containing div inside JSX)
                 5. <div></div> or any other tag     */
         <React.Fragment>
-            <div className="users wrapper">
-                {/* <button onClick={testHandler}>test</button> */}
-                <form className="users__form" onSubmit={submitHandler}>
-                    <div className="users__form--container">
-                        <label htmlFor="first-name" className={`users__label ${!validFirstName ? 'notValid' : ""}`}>First Name:</label>
+            <div className="wrapper">
+                <form className={css.users__form} onSubmit={submitHandler}>
+                    <div className={css.form__container}>
+                        <label htmlFor="first-name" className={`${css.users__label} ${!validFirstName ? css.notValid : ""}`}>First Name:</label>
                         <input
                             type="text"
                             id="first-name"
-                            className={`users__input ${!validFirstName ? 'notValidInput' : ""}`}
+                            className={`${css.users__input} ${!validFirstName ? css.notValidInput : ""}`}
                             placeholder="Enter First Name"
                             onChange={firstNameHandler}
                             value={firstName}>
                         </input>
                     </div>
-                    <div className="users__form--container">
-                        <label htmlFor="last-name" className={`users__label ${!validLastName ? "notValid" : ""}`}>Last Name:</label>
+                    <div className={css.form__container}>
+                        <label htmlFor="last-name" className={`${css.users__label} ${!validLastName ? css.notValid : ""}`}>Last Name:</label>
                         <input
                             type="text"
                             id="last-name"
-                            className={`users__input ${!validLastName ? 'notValidInput' : ""}`}
+                            className={`${css.users__input} ${!validLastName ? css.notValidInput : ""}`}
                             placeholder="Enter Last Name"
                             onChange={lastNameHandler}
                             value={lastName}>
                         </input>
                     </div>
-                    <button className="users__btn" type="Submit">Submit</button>
+                    <button className={css.users__btn} type="Submit">Submit</button>
                 </form>
-                <h2 className="users__title">Users</h2>
-                {users && <ul className="users__list">
+                <h2 className={css.users__title}>Users :</h2>
+                {users && <ul className={css.users__list}>
                     {users.map((user) => {
                         return (
                             <li
-                                className="users__item"
+                                className={css.users__item}
                                 key={user.id}>
                                 <span>{user.firstName} {user.lastName}</span>
-                                <button className="users__delete" onClick={() => deleteUser(user.id)}><VscTrash /></button>
+                                <button className={css.users__delete} onClick={() => deleteUser(user.id)}><VscTrash /></button>
                             </li>
                         )
                     })}
                 </ul>}
-                {users.length === 0 && <div className="users__empty">....No users to display....</div>}
+                {users.length === 0 && <div className={css.users__empty}>....No users to display....</div>}
             </div>
         </React.Fragment>
     )

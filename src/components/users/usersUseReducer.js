@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react"
-import "./users.scss"
+import css from "./users.module.scss"
 import { v4 as uuid } from 'uuid';
 import { VscTrash } from "react-icons/vsc";
 
@@ -88,46 +88,46 @@ const UsersUseReducer = ({ setError }) => {
 
     return (
         <React.Fragment>
-            <div className="users wrapper">
-                <form className="users__form" onSubmit={submitHandler}>
-                    <div className="users__form--container">
-                        <label htmlFor="first-name" className={`users__label ${state.validFirstName === false ? 'notValid' : ""}`}>First Name:</label>
+            <div className="wrapper">
+                <form className={css.users__form} onSubmit={submitHandler}>
+                    <div className={css.form__container}>
+                        <label htmlFor="first-name" className={`${css.users__label} ${state.validFirstName === false ? css.notValid : ""}`}>First Name:</label>
                         <input
                             type="text"
                             id="first-name"
-                            className={`users__input ${state.validFirstName === false ? 'notValidInput' : ""}`}
+                            className={`${css.users__input} ${state.validFirstName === false ? css.notValidInput : ""}`}
                             placeholder="Enter First Name"
                             onChange={(e) => dispatch({ type: "fistName_update", value: e.target.value })}
                             value={state.firstName}>
                         </input>
                     </div>
-                    <div className="users__form--container">
-                        <label htmlFor="last-name" className={`users__label ${state.validLastName === false ? "notValid" : ""}`}>Last Name:</label>
+                    <div className={css.form__container}>
+                        <label htmlFor="last-name" className={`${css.users__label} ${state.validLastName === false ? css.notValid : ""}`}>Last Name:</label>
                         <input
                             type="text"
                             id="last-name"
-                            className={`users__input ${state.validLastName === false ? 'notValidInput' : ""}`}
+                            className={`${css.users__input} ${state.validLastName === false ? css.notValidInput : ""}`}
                             placeholder="Enter Last Name"
                             onChange={(e) => dispatch({ type: "lastName_update", value: e.target.value })}
                             value={state.lastName}>
                         </input>
                     </div>
-                    <button className="users__btn" type="Submit">Submit</button>
+                    <button className={css.users__btn} type="Submit">Submit</button>
                 </form>
-                <h2 className="users__title">Users</h2>
-                {state.users && <ul className="users__list">
+                <h2 className={css.users__title}>Users</h2>
+                {state.users && <ul className={css.users__list}>
                     {state.users.map((user) => {
                         return (
                             <li
-                                className="users__item"
+                                className={css.users__item}
                                 key={user.id}>
                                 <span>{user.firstName} {user.lastName}</span>
-                                <button className="users__delete" onClick={() => dispatch({ type: "delete_user", id: user.id })}><VscTrash /></button>
+                                <button className={css.users__delete} onClick={() => dispatch({ type: "delete_user", id: user.id })}><VscTrash /></button>
                             </li>
                         )
                     })}
                 </ul>}
-                {state.users.length === 0 && <div className="users__empty">....No users to display....</div>}
+                {state.users.length === 0 && <div className={css.users__empty}>....No users to display....</div>}
             </div>
         </React.Fragment>
     )

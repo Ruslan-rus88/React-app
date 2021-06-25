@@ -79,7 +79,7 @@ function App() {
           resetError={resetError} />}
 
       {activePage === "Home" && <Home />}
-      {activePage === "Countries" && <Countries />}
+      {activePage === "Countries" && <Countries setError={setError} />}
       {activePage === "Sign in" && <SignIn />}
       {activePage === "Users" && <Users setError={setError} />}
       {activePage === "Users(useReducer)" && <UsersUseReducer setError={setError} />}

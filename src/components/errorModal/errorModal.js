@@ -1,21 +1,23 @@
 import React from "react"
-import "./errorModal.scss"
+import css from "./errorModal.module.scss"
 
 const ErrorModal = ({ title, errorMessage, resetError }) => {
-    return <div className="error__container">
-        <div className="error__background" onClick={resetError}></div>
-        <div className="error__wrapper">
-            <header className="error__header">
-                <h1 className="error__title">{title}</h1>
-            </header>
-            <main className="error__main">
-                <p className="error__message">{errorMessage}</p>
-            </main>
-            <footer className="error__footer">
-                <button className="error__button" onClick={resetError}>Close</button>
-            </footer>
+    return (
+        <div className={css.error__container}>
+            <div className={css.error__background} onClick={resetError}></div>
+            <div className={css.error__box}>
+                <header className={css.error__header}>
+                    <h1 className={css.error__title}>{title}</h1>
+                </header>
+                <main className={css.error__main}>
+                    <p className={css.error__message}>{errorMessage}</p>
+                </main>
+                <footer className={css.error__footer}>
+                    <button className={css.error__button} onClick={resetError}>Close</button>
+                </footer>
+            </div>
         </div>
-    </div>
+    )
 }
 
 export default ErrorModal;

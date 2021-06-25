@@ -1,4 +1,4 @@
-/* @import "../../styles/base.css"; */
+@import "../../index.scss";
 
 .error__container {
   position: absolute;
@@ -15,33 +15,33 @@
   position: absolute;
   min-height: 100vh;
   width: 100vw;
-  background-color: rgba(19, 18, 18, 0.8);
+  background-color: rgba($main-color-dark, 0.9);
   z-index: 2;
 }
-.error__wrapper {
-  min-width: 40vw;
+.error__box {
+  flex: 1;
+  max-width: 450px;
   z-index: 3;
-  border-radius: 20px;
-  box-shadow: 0px 0px 15px 7px rgb(123, 78, 5);
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: $main-color-light;
+
+  box-shadow: 0px 0px 15px 7px rgba($bg-color-orange, 1);
 }
 .error__header {
-  color: rgb(245, 242, 237);
-  background-color: rgb(29, 31, 29);
+  color: $main-color-light;
+  background-color: $main-color-dark;
   text-align: center;
   padding: 20px;
-  border-radius: 20px 20px 0 0;
 }
 .error__title {
 }
 .error__main {
-  background-color: rgb(245, 242, 237);
-  color: rgb(29, 31, 29);
+  color: $main-color-dark;
   text-align: center;
   padding: 20px;
 }
 .error__footer {
-  background-color: rgb(245, 242, 237);
   padding: 20px;
-  border-radius: 0 0 20px 20px;
   text-align: right;
 }
