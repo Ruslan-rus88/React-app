@@ -4,21 +4,25 @@
   min-height: 70px;
   height: fit-content;
   background-color: $main-color-dark;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
 }
 
 .header__wrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .box {
   line-height: 70px;
-  margin-right: 20px;
-  display: inline-block;
-  position: relative;
 }
 
 .box__logo {
+  margin-right: 20px;
 }
 
 .logo__title {
@@ -26,16 +30,31 @@
   font-weight: 600;
 }
 
+.display__checkbox {
+  display: none;
+}
+
+.display__label {
+  display: none;
+}
+.menu__icon {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
 .box__navBar {
   flex: 1;
 }
 
 .nav {
+  display: flex;
 }
 
 .header__list {
+  flex: 1;
   display: flex;
   column-gap: 10px;
+  margin-right: 20px;
 }
 .header__item {
   cursor: pointer;
@@ -50,14 +69,14 @@
   color: rgb(55, 148, 174);
 }
 
-.box__login {
-  margin-right: 0;
-}
 .button {
   margin-left: 10px;
 }
 
 .signInBtn {
+  position: absolute;
+  top: 13px;
+  right: 15px;
   animation: shadow 4s infinite ease-in-out;
 }
 
@@ -79,5 +98,51 @@
 @-moz-keyframes shadow {
   50% {
     box-shadow: 0 0 5px #fff;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .box__navBar {
+    // display: none;
+    position: fixed;
+    background-color: $main-color-dark;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    top: 70px;
+    left: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 3;
+    transform: translateX(-100vh);
+    transition: 0.3s;
+  }
+
+  .display__label {
+    display: block;
+  }
+
+  .display__checkbox:checked ~ .box__navBar {
+    transform: translateX(0);
+  }
+
+  .nav {
+    flex-direction: column;
+  }
+
+  .header__list {
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+  }
+
+  .actions {
+    text-align: center;
+  }
+  .button {
+    margin-left: 0;
+    padding: 10px 50px;
+  }
+  .signInBtn {
+    position: inherit;
   }
 }

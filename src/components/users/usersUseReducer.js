@@ -87,7 +87,7 @@ const UsersUseReducer = ({ setError }) => {
     }
 
     return (
-        <React.Fragment>
+        <div className={css.users}>
             <div className="wrapper">
                 <form className={css.users__form} onSubmit={submitHandler}>
                     <div className={css.form__container}>
@@ -129,7 +129,7 @@ const UsersUseReducer = ({ setError }) => {
                 </ul>}
                 {state.users.length === 0 && <div className={css.users__empty}>....No users to display....</div>}
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 

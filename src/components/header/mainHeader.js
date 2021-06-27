@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import css from "./mainHeader.module.scss"
 import { v4 as uuid } from "uuid"
 import navContext from "../../context/navContext"
+import { VscMenu } from "react-icons/vsc";
 
 const MainHeader = ({ navBarPages }) => {
     const ctx = useContext(navContext)
@@ -18,9 +19,19 @@ const MainHeader = ({ navBarPages }) => {
                 <div className={`${css.box} ${css.box__logo}`}>
                     <h1 className={css.logo__title}>React App</h1>
                 </div>
+                {!ctx.isLoggedIn && <div>
+
+                </div>}
+                <input
+                    id="display__checkbox"
+                    type="checkbox"
+                    className={css.display__checkbox} />
+                <label htmlFor="display__checkbox" className={css.display__label}>
+                    <VscMenu className={css.menu__icon} />
+                </label>
                 <div className={`${css.box} ${css.box__navBar}`}>
-                    {ctx.isLoggedIn && <nav className={css.nav}>
-                        <ul className={css.header__list}>
+                    <nav className={css.nav}>
+                        {ctx.isLoggedIn && <ul className={css.header__list}>
                             {navBarPages.map(page => {
                                 return <li
                                     className={`${css.header__item} ${ctx.navPage === page ? css.active : ""}`}
@@ -30,12 +41,12 @@ const MainHeader = ({ navBarPages }) => {
                                     {page}
                                 </li>
                             })}
-                        </ul>
-                    </nav>}
-                </div>
-                <div className={`${css.box} ${css.box__login}`}>
-                    {!ctx.isLoggedIn && <button className={`${css.button} ${css.signInBtn}`} onClick={() => ctx.setNavPage("Sign in")}>Sign in</button>}
-                    {ctx.isLoggedIn && <button className={css.button} onClick={logOutFunction}>Sign out</button>}
+                        </ul>}
+                        <div className={css.actions}>
+                            {!ctx.isLoggedIn && <button className={`${css.button} ${css.signInBtn}`} onClick={() => ctx.setNavPage("Sign in")}>Sign in</button>}
+                            {ctx.isLoggedIn && <button className={css.button} onClick={logOutFunction}>Sign out</button>}
+                        </div>
+                    </nav>
                 </div>
             </div>
         </header>

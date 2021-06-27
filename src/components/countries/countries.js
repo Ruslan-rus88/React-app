@@ -1,7 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import css from "./countries.module.scss"
 import { v4 as uuidv4 } from "uuid"
 import CountryCard from './country-card';
+
+/*
+ todo:
+1. display error if no country was found in search bar
+2. create a function for search bar
+3. adjust the country card - create a new component for the lines
+go to sleep :)
+*/
 
 const Countries = ({ setError }) => {
     const [isLoading, setIsLoading] = useState(false)

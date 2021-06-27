@@ -86,7 +86,7 @@ const Users = ({ setError }) => {
                 3. <React.Fragment></React.Fragment> no need to import
                 4. <wrapper></wrapper>  in this example wrapper is not necessary (it used to return children without returning containing div inside JSX)
                 5. <div></div> or any other tag     */
-        <React.Fragment>
+        <div className={css.users}>
             <div className="wrapper">
                 <form className={css.users__form} onSubmit={submitHandler}>
                     <div className={css.form__container}>
@@ -128,7 +128,7 @@ const Users = ({ setError }) => {
                 </ul>}
                 {users.length === 0 && <div className={css.users__empty}>....No users to display....</div>}
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 
