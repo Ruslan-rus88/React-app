@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import css from "./home.module.scss"
 import NavContext from "../../context/navContext"
-import { VscArrowUp } from "react-icons/vsc";
 
 const Home = () => {
     const ctx = useContext(NavContext)
@@ -19,7 +18,6 @@ const Home = () => {
                                 The local storage of your browser will be used to save all entered data in Sign up and Sign in forms
                             </p>
                         </div>
-                        <VscArrowUp className={css.arrowUp} />
                     </div>
                 }
                 {

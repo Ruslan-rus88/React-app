@@ -48,6 +48,7 @@
 
 .nav {
   display: flex;
+  justify-content: flex-end;
 }
 
 .header__list {
@@ -66,7 +67,11 @@
 }
 
 .active {
-  color: rgb(55, 148, 174);
+  color: $bg-color-orange;
+}
+
+.actions {
+  position: relative;
 }
 
 .button {
@@ -74,10 +79,8 @@
 }
 
 .signInBtn {
-  position: absolute;
-  top: 13px;
-  right: 15px;
   animation: shadow 4s infinite ease-in-out;
+  margin-left: 0;
 }
 
 @keyframes shadow {
@@ -103,8 +106,7 @@
 
 @media screen and (max-width: 600px) {
   .box__navBar {
-    // display: none;
-    position: fixed;
+    position: absolute;
     background-color: $main-color-dark;
     width: 100%;
     min-height: calc(100vh - 70px);
@@ -122,16 +124,23 @@
     display: block;
   }
 
+  .display__checkbox:checked ~ .display__label {
+    color: $bg-color-orange;
+  }
+
   .display__checkbox:checked ~ .box__navBar {
     transform: translateX(0);
     opacity: 1;
+    border-top: 1px solid $bg-color-orange;
   }
 
   .nav {
     flex-direction: column;
+    box-sizing: border-box;
   }
 
   .header__list {
+    flex: 1;
     flex-direction: column;
     align-items: center;
     margin-right: 0;
@@ -141,10 +150,48 @@
     text-align: center;
   }
   .button {
-    margin-left: 0;
     padding: 10px 50px;
   }
-  .signInBtn {
-    position: inherit;
+}
+
+.arrowUp {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  top: 100%;
+  font-size: 2rem;
+  padding: 5px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: resize 4s infinite ease-in-out;
+  -o-animation: resize 4s infinite ease-in-out;
+  -moz-animation: resize 4s infinite ease-in-out;
+  -webkit-animation: resize 4s infinite ease-in-out;
+}
+
+@keyframes resize {
+  50% {
+    transform: translateY(50px) translateX(50%);
+    font-size: 1.2rem;
+  }
+}
+@-o-keyframes resize {
+  50% {
+    transform: translateY(50px) translateX(50%);
+    font-size: 1.2rem;
+  }
+}
+@-moz-keyframes resize {
+  50% {
+    transform: translateY(50px) translateX(50%);
+    font-size: 1.2rem;
+  }
+}
+@-webkit-keyframes resize {
+  50% {
+    transform: translateY(50px) translateX(50%);
+    font-size: 1.2rem;
   }
 }

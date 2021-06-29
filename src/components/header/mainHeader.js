@@ -2,7 +2,8 @@ import React, { useContext, useRef } from "react"
 import css from "./mainHeader.module.scss"
 import { v4 as uuid } from "uuid"
 import navContext from "../../context/navContext"
-import { VscMenu } from "react-icons/vsc";
+import { VscMenu, VscArrowUp } from "react-icons/vsc";
+
 
 const MainHeader = ({ navBarPages }) => {
     const ctx = useContext(navContext)
@@ -11,7 +12,12 @@ const MainHeader = ({ navBarPages }) => {
     const displayCheckboxRef = useRef();
 
     // Add new navBar pages here:
-    const logOutFunction = () => {
+    const logFunction = () => {
+        displayCheckboxRef.current.checked = false;
+        if (!ctx.isLoggedIn) {
+            ctx.setNavPage("Sign in");
+            return;
+        }
         localStorage.removeItem("loggedUser")
         ctx.setIsLoggedIn(false)
         ctx.setNavPage("Home")
@@ -27,9 +33,6 @@ const MainHeader = ({ navBarPages }) => {
                 <div className={`${css.box} ${css.box__logo}`}>
                     <h1 className={css.logo__title}>React App</h1>
                 </div>
-                {!ctx.isLoggedIn && <div>
-
-                </div>}
                 <input
                     ref={displayCheckboxRef}
                     id="display__checkbox"
@@ -52,8 +55,12 @@ const MainHeader = ({ navBarPages }) => {
                             })}
                         </ul>}
                         <div className={css.actions}>
-                            {!ctx.isLoggedIn && <button className={`${css.button} ${css.signInBtn}`} onClick={() => ctx.setNavPage("Sign in")}>Sign in</button>}
-                            {ctx.isLoggedIn && <button className={css.button} onClick={logOutFunction}>Sign out</button>}
+                            <button
+                                className={`${css.button} ${!ctx.isLoggedIn ? css.signInBtn : ""}`}
+                                onClick={logFunction}>
+                                {!ctx.isLoggedIn ? "Sign in" : "Sign out"}
+                            </button>
+                            {!ctx.isLoggedIn && <VscArrowUp className={css.arrowUp} />}
                         </div>
                     </nav>
                 </div>
