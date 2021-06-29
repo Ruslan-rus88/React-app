@@ -114,7 +114,8 @@
     box-sizing: border-box;
     z-index: 3;
     transform: translateX(-100vh);
-    transition: 0.3s;
+    transition: transform 0.3s;
+    opacity: 0;
   }
 
   .display__label {
@@ -123,6 +124,7 @@
 
   .display__checkbox:checked ~ .box__navBar {
     transform: translateX(0);
+    opacity: 1;
   }
 
   .nav {

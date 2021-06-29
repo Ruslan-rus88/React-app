@@ -65,7 +65,7 @@ const Countries = ({ setError }) => {
             case "population":
                 setRequestedCountry([...requestedCountry.sort((a, b) => a.population < b.population ? 1 : a.population > b.population ? -1 : 0)])
                 return;
-            case "none":
+            case "name":
                 fetchCountriesHandler();
                 return;
             default:
@@ -102,7 +102,7 @@ const Countries = ({ setError }) => {
                 <h2 className={css.options__title}>Options:</h2>
                 <label htmlFor="select-filter" className={css.select__label}>Sort by:</label>
                 <select name="select-filter" id="select-filter" className={css.select} onChange={(e) => { filterHandler(e) }}>
-                    <option className={css.select__option} value="none">None</option>
+                    <option className={css.select__option} value="name">Name</option>
                     <option className={css.select__option} value="area">Area</option>
                     <option className={css.select__option} value="population">Population</option>
                 </select>

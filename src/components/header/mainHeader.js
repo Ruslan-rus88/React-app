@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useRef } from "react"
 import css from "./mainHeader.module.scss"
 import { v4 as uuid } from "uuid"
 import navContext from "../../context/navContext"
@@ -7,11 +7,19 @@ import { VscMenu } from "react-icons/vsc";
 const MainHeader = ({ navBarPages }) => {
     const ctx = useContext(navContext)
 
+    // to hide navBar after selecting the page
+    const displayCheckboxRef = useRef();
+
     // Add new navBar pages here:
     const logOutFunction = () => {
         localStorage.removeItem("loggedUser")
         ctx.setIsLoggedIn(false)
         ctx.setNavPage("Home")
+    }
+
+    const selectPageHandler = (page) => {
+        ctx.setNavPage(page);
+        displayCheckboxRef.current.checked = false;
     }
     return (
         <header className={css.header}>
@@ -23,6 +31,7 @@ const MainHeader = ({ navBarPages }) => {
 
                 </div>}
                 <input
+                    ref={displayCheckboxRef}
                     id="display__checkbox"
                     type="checkbox"
                     className={css.display__checkbox} />
@@ -35,7 +44,7 @@ const MainHeader = ({ navBarPages }) => {
                             {navBarPages.map(page => {
                                 return <li
                                     className={`${css.header__item} ${ctx.navPage === page ? css.active : ""}`}
-                                    onClick={() => ctx.setNavPage(page)}
+                                    onClick={() => selectPageHandler(page)}
                                     key={uuid()}
                                 >
                                     {page}
