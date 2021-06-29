@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import css from "./countries.module.scss"
 import { v4 as uuidv4 } from "uuid"
 import CountryCard from './country-card';
@@ -16,8 +16,13 @@ const Countries = ({ setError }) => {
     const [inputCountry, setInputCountry] = useState("");
     const [requestedCountry, setRequestedCountry] = useState(undefined);
     const [displayedCountry, setDisplayedCountry] = useState(undefined);
+    const [allCountriesList, setAllCountriesList] = useState(undefined);
     // used to save the list before displaying country card, to get it back after closing the card
     const [previousCountriesList, setPreviousCountriesList] = useState(undefined);
+
+    // used to reset the sort filter after changing the region
+    const sortRef = useRef();
+    const regionRef = useRef();
 
     const fetchCountriesHandler = async () => {
         try {
@@ -27,14 +32,11 @@ const Countries = ({ setError }) => {
             if (!response.ok) {
                 throw new Error("Something went wrong")
             }
-
             const data = await response.json()
-            const requestedCountry1 = data.filter((item) => {
-                return item.name.toLowerCase().includes(inputCountry.toLowerCase())
-            })
-            setRequestedCountry(requestedCountry1)
-            setIsLoading(false)
 
+            setRequestedCountry(data)
+            setAllCountriesList(data)
+            setIsLoading(false)
         } catch (error) {
             setError({
                 title: "Loading Error", errorMessage: error.message
@@ -43,9 +45,24 @@ const Countries = ({ setError }) => {
         }
     }
 
+    useEffect(() => {
+        fetchCountriesHandler();
+    }, [])
+
     const formSubmitHandler = (e) => {
         e.preventDefault();
-        fetchCountriesHandler();
+        sortRef.current.value = "None"
+        regionRef.current.value = "All"
+        const searchedCountries = [...allCountriesList.filter((item) => {
+            return item.name.toLowerCase().includes(inputCountry.toLowerCase())
+        })]
+        if (searchedCountries.length === 0) {
+            setError({
+                title: "Search Error", errorMessage: "No countries found! Please search again"
+            })
+            return;
+        }
+        setRequestedCountry(searchedCountries)
         setInputCountry("")
     }
 
@@ -53,9 +70,17 @@ const Countries = ({ setError }) => {
         setInputCountry(e.target.value)
     }
 
-    useEffect(() => {
-        fetchCountriesHandler();
-    }, [])
+    const selectRegionHandler = (e) => {
+        setPreviousCountriesList(requestedCountry)
+        sortRef.current.value = "None"
+        if (e.target.value === "All") {
+            setRequestedCountry(allCountriesList)
+            return;
+        }
+        setRequestedCountry([...allCountriesList.filter(country => {
+            return e.target.value === country.region
+        })])
+    }
 
     const filterHandler = (e) => {
         switch (e.target.value) {
@@ -66,7 +91,7 @@ const Countries = ({ setError }) => {
                 setRequestedCountry([...requestedCountry.sort((a, b) => a.population < b.population ? 1 : a.population > b.population ? -1 : 0)])
                 return;
             case "name":
-                fetchCountriesHandler();
+                setRequestedCountry([...requestedCountry.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0)])
                 return;
             default:
                 return;
@@ -81,12 +106,6 @@ const Countries = ({ setError }) => {
 
     return (
         <div className={`${css.countries} wrapper`}>
-
-            {/* <button onClick={() => {
-                console.log("inputCountry: ", inputCountry);
-                console.log("requestedCountry: ", requestedCountry);
-            }}>test</button> */}
-
             <h2 className={css.title}>Let's read about countries!!</h2>
             <form onSubmit={formSubmitHandler} className={css.form}>
                 <input
@@ -100,12 +119,49 @@ const Countries = ({ setError }) => {
             </form>
             <div className={css.options}>
                 <h2 className={css.options__title}>Options:</h2>
-                <label htmlFor="select-filter" className={css.select__label}>Sort by:</label>
-                <select name="select-filter" id="select-filter" className={css.select} onChange={(e) => { filterHandler(e) }}>
-                    <option className={css.select__option} value="name">Name</option>
-                    <option className={css.select__option} value="area">Area</option>
-                    <option className={css.select__option} value="population">Population</option>
-                </select>
+                <div className={css.options__box}>
+                    <div className={css.filters__box}>
+                        <div className={css.select__box}>
+                            <label htmlFor="select-region" className={css.select__label}>Region:</label>
+                            <select
+                                name="select-region"
+                                id="select-region"
+                                className={css.select}
+                                ref={regionRef}
+                                onChange={(e) => { selectRegionHandler(e) }}>
+                                <option className={css.select__option} value="All">All</option>
+                                <option className={css.select__option} value="Asia">Asia</option>
+                                <option className={css.select__option} value="Europe">Europe</option>
+                                <option className={css.select__option} value="Africa">Africa</option>
+                                <option className={css.select__option} value="Oceania">Oceania</option>
+                                <option className={css.select__option} value="Americas">Americas</option>
+                                <option className={css.select__option} value="Polar">Polar</option>
+                            </select>
+                        </div>
+                        <div className={css.select__box}>
+                            <label htmlFor="select-filter" className={css.select__label}>Sort by:</label>
+                            <select
+                                name="select-filter"
+                                id="select-filter"
+                                className={css.select}
+                                ref={sortRef}
+                                onChange={(e) => { filterHandler(e) }}>
+                                <option className={css.select__option} value="None">None</option>
+                                <option className={css.select__option} value="name">Name</option>
+                                <option className={css.select__option} value="area">Area</option>
+                                <option className={css.select__option} value="population">Population</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className={css.Random__box}>
+                        <button
+                            className={css.random__btn}
+                            type="button"
+                            onClick={() => { selectCountryHandler(requestedCountry[Math.ceil(Math.random() * (requestedCountry.length - 1))]) }}>
+                            Random Select
+                        </button>
+                    </div>
+                </div>
             </div>
             {isLoading && <div className={css.loading}>Loading...</div>}
             {!isLoading && requestedCountry &&
