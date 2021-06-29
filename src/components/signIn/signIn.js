@@ -28,19 +28,21 @@ const SignIn = () => {
     const ctx = useContext(NavContext)
 
     return (
-        <div className={css.signIn}>
-            <div className={css.signIn__container}>
-                <button className={css.close} onClick={() => { ctx.setNavPage("Home") }}><VscClose /></button>
-                <h2 className={css.signIn__title}>{state.formType}</h2>
+        <div className={css.sign}>
+            <div className={css.sign__container}>
+                <div className={css.sign__header}>
+                    <h2 className={css.sign__title}>{state.formType}</h2>
+                    <button className={css.sign__close_btn} onClick={() => { ctx.setNavPage("Home") }}><VscClose /></button>
+                </div>
 
                 {/* form */}
                 {state.formType === "Sign in" && <SignInForm />}
                 {state.formType === "Sign up" && <SignUpForm />}
                 {/* form */}
 
-                <div className={css.actions}>
+                <div className={css.sign__actions}>
                     <button
-                        className={css.signIn__action_btn}
+                        className={css.sign__action_btn}
                         onClick={() => dispatch({ type: "change-form" })}
                     >
                         {state.actionButtonText}

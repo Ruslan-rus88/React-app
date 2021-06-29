@@ -59,26 +59,28 @@ const SignInForm = () => {
     }
 
     return (
-        <form className={css.signIn__form} onSubmit={submitHandler}>
-            <div className={css.signIn__Block}>
+        <form className={css.sign__form} onSubmit={submitHandler}>
+            <div className={css.sign__Block}>
                 <input
                     type="text"
-                    className={`${css.signInInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
+                    className={`${css.signInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
                     id="signup_email"
                     placeholder="Email"
                     value={state.email}
                     onChange={(e) => dispatch({ type: "updateEmail", email: e.target.value })} />
             </div>
-            <div className={css.signIn__Block}>
+            <div className={css.sign__Block}>
                 <input
                     type="password"
-                    className={`${css.signInInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
+                    className={`${css.signInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
                     id="signup_password"
                     placeholder="Password"
                     value={state.password}
                     onChange={(e) => dispatch({ type: "updatePassword", password: e.target.value })} />
             </div>
-            <button className={css.signIn__submit}>Sign in</button>
+            <div className={`${css.sign__Block} ${css.sign__Block_submit}`} >
+                <button className={css.sign__submit}>Sign in</button>
+            </div>
         </form>
     )
 }

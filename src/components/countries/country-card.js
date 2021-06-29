@@ -18,46 +18,54 @@ const CountryCard = ({ displayedCountry, setDisplayedCountry, setRequestedCountr
                 <figure className={css.flag_box}>
                     <img src={country.flag} alt={`${country.name} flag`} className={css.flag} />
                 </figure>
-                <ul className={css.list}>
-                    <li className={css.item}>
-                        <span className={css.subTitle} > Native Name: </span> {country.nativeName}
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle}>Capital: </span> {country.capital}
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle}>Area: </span> {country.area} KM * 2
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle}>Population: </span> {country.population}
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle} > Calling code:
-                        </span>
-                        {country.callingCodes.map(code => <span key={uuidv4()}> {code} </span>)}
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle} > Time zones:
-                        </span>
-                        {country.timezones.map((zone, index) => {
-                            return (<span key={uuidv4()}>{index > 0 ? "," : ""} {zone} </span>)
-                        })}
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle} > Currencies:
-                        </span>
-                        {country.currencies.map((currency, index) => {
-                            return (<span key={uuidv4()}>{index > 0 ? "," : ""} {currency.name} ({currency.symbol}) </span>)
-                        })}
-                    </li>
-                    <li className={css.item}>
-                        <span className={css.subTitle} > Languages:
-                        </span>
-                        {country.languages.map((language, index) => {
-                            return (<span key={uuidv4()}>{index > 0 ? "," : ""} {language.name} ({language.nativeName}) </span>)
-                        })}
-                    </li>
-                </ul>
+                <table className={css.properties_table}>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Native Name:</td>
+                        <td className={css.properties_value}>{country.nativeName}</td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Capital:</td>
+                        <td className={css.properties_value}>{country.capital}</td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Area:</td>
+                        <td className={css.properties_value}>{country.area} KM * 2</td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Population:</td>
+                        <td className={css.properties_value}>{country.population}</td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Calling code:</td>
+                        <td className={css.properties_value}>
+                            {country.callingCodes.map(code => <span key={uuidv4()}> {code} </span>)}
+                        </td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Time zones:</td>
+                        <td className={css.properties_value}>
+                            {country.timezones.map((zone, index) => {
+                                return (<span key={uuidv4()}>{index > 0 ? "," : ""} {zone} </span>)
+                            })}
+                        </td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Currencies:</td>
+                        <td className={css.properties_value}>
+                            {country.currencies.map((currency, index) => {
+                                return (<span key={uuidv4()}>{index > 0 ? "," : ""} {currency.name} ({currency.symbol}) </span>)
+                            })}
+                        </td>
+                    </tr>
+                    <tr className={css.properties_row}>
+                        <td className={css.properties_title}>Languages:</td>
+                        <td className={css.properties_value}>
+                            {country.languages.map((language, index) => {
+                                return (<span key={uuidv4()}>{index > 0 ? "," : ""} {language.name} ({language.nativeName}) </span>)
+                            })}
+                        </td>
+                    </tr>
+                </table>
                 <button type="button" className={css.button} onClick={closeBtnHandler}>Back to list</button>
 
             </div>

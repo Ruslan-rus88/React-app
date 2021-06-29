@@ -62,45 +62,47 @@ const SignUpForm = () => {
     }
 
     return (
-        <form className={css.signIn__form} onSubmit={submitHandler}>
+        <form className={css.sign__form} onSubmit={submitHandler}>
             {/* <button onClick={() => { console.log(state) }}>test</button> */}
-            <div className={css.signIn__Block}>
+            <div className={css.sign__Block}>
                 <input
                     type="text"
-                    className={`${css.signInInput} ${!state.nameIsValid ? css.invalidInput : ""}`}
+                    className={`${css.signInput} ${!state.nameIsValid ? css.invalidInput : ""}`}
                     id="signup_name"
                     placeholder="Name"
                     value={state.name}
                     onChange={(e) => dispatch({ type: "updateName", name: e.target.value })} />
             </div>
-            <div className={css.signIn__Block}>
+            <div className={css.sign__Block}>
                 <input
                     type="text"
-                    className={`${css.signInInput} ${!state.lastNameIsValid ? css.invalidInput : ""}`}
+                    className={`${css.signInput} ${!state.lastNameIsValid ? css.invalidInput : ""}`}
                     id="signup_lastName"
                     placeholder="Last Name"
                     value={state.lastName}
                     onChange={(e) => dispatch({ type: "updateLastName", lastName: e.target.value })} />
             </div>
-            <div className={css.signIn__Block}>
+            <div className={css.sign__Block}>
                 <input
                     type="text"
-                    className={`${css.signInInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
+                    className={`${css.signInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
                     id="signup_email"
                     placeholder="Email"
                     value={state.email}
                     onChange={(e) => dispatch({ type: "updateEmail", email: e.target.value })} />
             </div>
-            <div className={css.signIn__Block}>
+            <div className={css.sign__Block}>
                 <input
                     type="password"
-                    className={`${css.signInInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
+                    className={`${css.signInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
                     id="signup_password"
                     placeholder="Password"
                     value={state.password}
                     onChange={(e) => dispatch({ type: "updatePassword", password: e.target.value })} />
             </div>
-            <button type="submit" className={css.signIn__submit}>Sign up</button>
+            <div className={`${css.sign__Block} ${css.sign__Block_submit}`} >
+                <button type="submit" className={css.sign__submit}>Sign up</button>
+            </div>
         </form>
     )
 }

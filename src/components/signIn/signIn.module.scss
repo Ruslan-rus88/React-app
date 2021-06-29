@@ -1,10 +1,12 @@
-.signIn {
+@import "../../index.scss";
+
+.sign {
   background-color: #fff;
   color: rgb(34, 54, 68);
   width: 100vw;
   min-height: 100vh;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 90px 20px 20px 20px;
   position: absolute;
   top: 0;
   left: 0;
@@ -13,44 +15,80 @@
   justify-content: center;
 }
 
-.signIn__container {
+@media screen and (max-width: 400px) {
+  .sign {
+    background-color: rgb(177, 218, 230);
+  }
+}
+
+.sign__container {
   padding: 40px;
-  background-color: rgba(55, 148, 174, 0.3);
+  background-color: rgb(177, 218, 230);
   min-width: 300px;
   box-sizing: border-box;
   border-radius: 5px;
   position: relative;
 }
 
-.close {
-  padding: 5px 5px 0 5px;
-  float: right;
+.sign__header {
+  // padding-bottom: 10px;
+  min-height: fit-content;
+  position: relative;
 }
 
-.signIn__title {
+.sign__title {
   font-weight: 600;
   font-size: 1.5rem;
-  text-align: center;
-  padding: 40px 10px 0;
+  display: inline-block;
+  padding-right: 35px;
 }
 
-/* SIGN IN FORM */
-.signIn__form {
-  margin-top: 20px;
+.sign__close_btn {
+  position: absolute;
+  display: inline-block;
+  padding: 5px 5px 0 5px;
+  margin-left: 5px;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* SIGN FORM */
+.sign__form {
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
   width: 100%;
 }
 
-.signIn__Block {
-}
-/* SIGN IN FORM-END */
-.actions {
-  padding-top: 50px;
+.sign__Block {
 }
 
-.signIn__action_btn {
+.signInput {
+  padding: 10px;
+  line-height: 1.2;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgb(34, 54, 68);
+
+  &:focus {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+}
+.sign__Block_submit {
+  margin-top: 30px;
+}
+
+.sign__submit {
+  width: 100%;
+}
+/* SIGN FORM-END */
+.sign__actions {
+  padding-top: 30px;
+}
+
+.sign__action_btn {
   font-weight: 400;
   font-size: 0.8rem;
   color: rgba(34, 54, 68, 0.8);
@@ -60,30 +98,13 @@
   border-radius: 0;
   padding: 5px;
   float: right;
-}
 
-.signIn__action_btn:hover,
-.signIn__action_btn:focus {
-  border-bottom: 1px solid rgb(222, 143, 16);
-  color: rgb(222, 143, 16);
-  background: transparent;
-  /* background: rgba(255, 255, 255, 0.6); */
-}
-
-.signInInput {
-  padding: 10px;
-  line-height: 2;
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 1px solid rgb(34, 54, 68);
-}
-
-.signInInput:focus {
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-.signIn__submit {
-  /* border-radius: 0; */
+  &:hover,
+  &:focus {
+    border-bottom: 1px solid rgb(222, 143, 16);
+    color: rgb(222, 143, 16);
+    background: transparent;
+  }
 }
 
 /* form styles */

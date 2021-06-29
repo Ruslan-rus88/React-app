@@ -47,6 +47,7 @@
 @media screen and (max-width: 450px) {
   .options__box {
     flex-direction: column;
+    gap: 20px;
   }
 }
 .filters__box {
@@ -89,6 +90,7 @@
 .Random__box {
   flex: 1;
 }
+
 .random__btn {
   width: 100%;
   height: 100%;
