@@ -1,6 +1,8 @@
 import React, { useReducer, useContext, useEffect } from 'react'
-import css from "./signIn.module.scss"
+import css from "./sign.module.scss"
 import NavContext from '../../context/navContext'
+import { useHistory } from "react-router-dom"
+import { HOME_PATH } from '../../routes/paths'
 
 const initialState = {
     email: "",
@@ -48,6 +50,7 @@ const reducer = (state, action) => {
 
 const SignInForm = () => {
 
+    const history = useHistory()
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const ctx = useContext(NavContext)
@@ -55,8 +58,8 @@ const SignInForm = () => {
     useEffect(() => {
         if (state.loggedUser !== ctx.loggedUser && state.loggedUser.email) {
             ctx.setLoggedUser(state.loggedUser)
-            ctx.setNavPage("Home")
             ctx.setIsLoggedIn(true)
+            history.push(HOME_PATH)
         }
     }, [state.loggedUser])
 

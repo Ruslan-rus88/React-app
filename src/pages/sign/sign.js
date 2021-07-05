@@ -1,5 +1,5 @@
 import React, { useReducer, useContext } from "react"
-import css from "./signIn.module.scss"
+import css from "./sign.module.scss"
 import { VscClose } from "react-icons/vsc";
 import NavContext from "../../context/navContext";
 import SignUpForm from "./signUpForm";
@@ -19,7 +19,7 @@ const reducer = (state, action) => {
 }
 
 
-const SignIn = () => {
+const Sign = () => {
 
     // reducer
     const [state, dispatch] = useReducer(reducer, { formType: "Sign in", actionButtonText: "Sign up" })
@@ -53,4 +53,4 @@ const SignIn = () => {
     )
 }
 
-export default SignIn;
+export default Sign;

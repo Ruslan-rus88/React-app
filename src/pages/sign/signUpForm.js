@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import css from "./signIn.module.scss"
+import css from "./sign.module.scss"
 
 const initialState = {
     name: "",

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react"
-import ErrorModal from "./components/errorModal/errorModal"
-import Users from "./components/users/users"
-import UsersUseReducer from "./components/users/usersUseReducer"
-import MainHeader from "./components/header/mainHeader"
-import Home from "./components/home/home"
-import SignIn from "./components/signIn/signIn"
-import navContext from "./context/navContext"
-import Countries from "./components/countries/countries"
+import React, { useState, useEffect } from "react";
+import ErrorModal from "./components/errorModal/errorModal";
+import MainHeader from "./components/header/mainHeader";
+import navContext from "./context/navContext";
 
-// Examples:
-// import UseRefExample from "./components/Examples/useRef/useRefExample"
-// import UseEffectExample from "./components/Examples/useEffect/useEffectExample"
-// import UseReducerExample from "./components/Examples/useReducer/useReducerExample"
+// routes
+import { Route, Switch, Redirect } from "react-router-dom";
+import { HOME_PATH, COUNTRIES_PATH, USERS_PATH, SIGN_PATH } from "./routes/paths";
+
+// Pages
+import Home from "./pages/home/home";
+import Countries from "./pages/countries/countries";
+import Users from "./pages/users/users";
+import Sign from "./pages/sign/sign"
 
 function App() {
   const [error, setError] = useState(null)
@@ -20,9 +20,6 @@ function App() {
   const [loggedUser, setLoggedUser] = useState({})
 
   const resetError = () => setError(null)
-
-  // const navBarPages = ["Home", "Countries", "Users", "Users(useReducer)", "UseRef", "UseEffect", "UseReducer"]
-  const navBarPages = ["Home", "Countries", "Users"]
 
   useEffect(() => {
     let active_page = localStorage.getItem("activePage")
@@ -68,13 +65,30 @@ function App() {
         loggedUser: loggedUser,
         setLoggedUser: setLoggedUserFunction,
         setIsLoggedIn: setIsLoggedInFunction,
-        navPage: activePage,
-        setNavPage: setNavPageFunction,
-        navBarPages: navBarPages,
+        // navPage: activePage,
+        // setNavPage: setNavPageFunction,
+        // navBarPages: navBarPages,
         setError: setError,
       }}>
 
-      <MainHeader navBarPages={navBarPages} />
+      <MainHeader />
+      <Switch>
+        <Route path="/" exact >
+          <Redirect to={HOME_PATH} />
+        </Route>
+        <Route path={HOME_PATH} >
+          <Home />
+        </Route>
+        <Route path={COUNTRIES_PATH} exact >
+          <Countries />
+        </Route>
+        <Route path={USERS_PATH} >
+          <Users />
+        </Route>
+        <Route path={SIGN_PATH} >
+          <Sign />
+        </Route>
+      </Switch>
 
       {error &&
         <ErrorModal
@@ -82,18 +96,6 @@ function App() {
           errorMessage={error.errorMessage}
           resetError={resetError} />
       }
-      {activePage === "Home" && <Home />}
-      {activePage === "Countries" && <Countries />}
-      {activePage === "Sign in" && <SignIn />}
-      {activePage === "Users" && <Users setError={setError} />}
-      {activePage === "Users(useReducer)" && <UsersUseReducer setError={setError} />}
-
-      {/* Exapmles */}
-      {/* {activePage === "UseRef" && <UseRefExample />}
-      {activePage === "UseEffect" && <UseEffectExample />}
-      {activePage === "UseReducer" && <UseReducerExample />} */}
-      {/* Exapmles */}
-
     </navContext.Provider>
   );
 }
