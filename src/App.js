@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react"
 import ErrorModal from "./components/errorModal/errorModal"
 import Users from "./components/users/users"
 import UsersUseReducer from "./components/users/usersUseReducer"
-import UseRefExample from "./components/useRef/useRefExample"
-import UseEffectExample from "./components/useEffect/useEffectExample"
-import UseReducerExample from "./components/useReducer/useReducerExample"
 import MainHeader from "./components/header/mainHeader"
 import Home from "./components/home/home"
 import SignIn from "./components/signIn/signIn"
 import navContext from "./context/navContext"
 import Countries from "./components/countries/countries"
+
+// Examples:
+// import UseRefExample from "./components/Examples/useRef/useRefExample"
+// import UseEffectExample from "./components/Examples/useEffect/useEffectExample"
+// import UseReducerExample from "./components/Examples/useReducer/useReducerExample"
 
 function App() {
   const [error, setError] = useState(null)
@@ -69,23 +71,29 @@ function App() {
         navPage: activePage,
         setNavPage: setNavPageFunction,
         navBarPages: navBarPages,
+        setError: setError,
       }}>
+
       <MainHeader navBarPages={navBarPages} />
 
       {error &&
         <ErrorModal
           title={error.title}
           errorMessage={error.errorMessage}
-          resetError={resetError} />}
-
+          resetError={resetError} />
+      }
       {activePage === "Home" && <Home />}
-      {activePage === "Countries" && <Countries setError={setError} />}
+      {activePage === "Countries" && <Countries />}
       {activePage === "Sign in" && <SignIn />}
       {activePage === "Users" && <Users setError={setError} />}
       {activePage === "Users(useReducer)" && <UsersUseReducer setError={setError} />}
-      {activePage === "UseRef" && <UseRefExample />}
+
+      {/* Exapmles */}
+      {/* {activePage === "UseRef" && <UseRefExample />}
       {activePage === "UseEffect" && <UseEffectExample />}
-      {activePage === "UseReducer" && <UseReducerExample />}
+      {activePage === "UseReducer" && <UseReducerExample />} */}
+      {/* Exapmles */}
+
     </navContext.Provider>
   );
 }

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import css from "./countries.module.scss"
 import { v4 as uuidv4 } from "uuid"
 import CountryCard from './country-card';
+import NavContext from '../../context/navContext';
 
 /*
  todo:
@@ -11,7 +12,7 @@ import CountryCard from './country-card';
 go to sleep :)
 */
 
-const Countries = ({ setError }) => {
+const Countries = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [inputCountry, setInputCountry] = useState("");
     const [requestedCountry, setRequestedCountry] = useState(undefined);
@@ -23,6 +24,8 @@ const Countries = ({ setError }) => {
     // used to reset the sort filter after changing the region
     const sortRef = useRef();
     const regionRef = useRef();
+
+    const ctx = useContext(NavContext)
 
     const fetchCountriesHandler = async () => {
         try {
@@ -38,7 +41,7 @@ const Countries = ({ setError }) => {
             setAllCountriesList(data)
             setIsLoading(false)
         } catch (error) {
-            setError({
+            ctx.setError({
                 title: "Loading Error", errorMessage: error.message
             })
             console.log(error.message);
@@ -57,7 +60,7 @@ const Countries = ({ setError }) => {
             return item.name.toLowerCase().includes(inputCountry.toLowerCase())
         })]
         if (searchedCountries.length === 0) {
-            setError({
+            ctx.setError({
                 title: "Search Error", errorMessage: "No countries found! Please search again"
             })
             return;

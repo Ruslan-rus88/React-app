@@ -4,9 +4,9 @@ import NavContext from '../../context/navContext'
 
 const initialState = {
     email: "",
-    emailIsValid: false,
+    emailIsValid: true,
     password: "",
-    passwordIsValid: false,
+    passwordIsValid: true,
     loggedUser: {}
 }
 
@@ -14,9 +14,11 @@ const reducer = (state, action) => {
     const emailRE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     switch (action.type) {
         case "updateEmail":
-            return { ...state, email: action.email, emailIsValid: emailRE.test(action.email) }
+            // return { ...state, email: action.email, emailIsValid: emailRE.test(action.email) }
+            return { ...state, email: action.email, emailIsValid: true }
         case "updatePassword":
-            return { ...state, password: action.password, passwordIsValid: action.password.trim().length >= 6 }
+            // return { ...state, password: action.password, passwordIsValid: action.password.trim().length >= 6 }
+            return { ...state, password: action.password, passwordIsValid: true }
         case "submit":
             let users = localStorage.getItem("logged-users")
             users = JSON.parse(users)
@@ -27,10 +29,17 @@ const reducer = (state, action) => {
                     if (user.email === state.email && user.password === state.password) {
                         loggedUser = user
                         localStorage.setItem("loggedUser", JSON.stringify(user))
+                    } else {
+
                     }
                 })
             };
-            return { ...initialState, loggedUser: loggedUser };
+            return {
+                ...initialState,
+                loggedUser: loggedUser,
+                emailIsValid: emailRE.test(state.email),
+                passwordIsValid: state.password.trim().length >= 6
+            };
         default:
             return;
     }
