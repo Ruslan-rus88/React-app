@@ -1,32 +1,32 @@
 import React, { useContext, useRef } from "react"
 import css from "./mainHeader.module.scss"
-import { v4 as uuid } from "uuid"
 import navContext from "../../context/navContext"
 import { VscMenu, VscArrowUp } from "react-icons/vsc";
+import { HOME_PATH, COUNTRIES_PATH, USERS_PATH, SIGN_IN_PATH } from "../../routes/paths";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
+const MainHeader = () => {
+    const history = useHistory();
 
-const MainHeader = ({ navBarPages }) => {
     const ctx = useContext(navContext)
 
     // to hide navBar after selecting the page
     const displayCheckboxRef = useRef();
 
-    // Add new navBar pages here:
     const logFunction = () => {
         displayCheckboxRef.current.checked = false;
-        if (!ctx.isLoggedIn) {
-            ctx.setNavPage("Sign in");
-            return;
+        if (ctx.isLoggedIn) {
+            localStorage.removeItem("loggedUser")
+            ctx.setIsLoggedIn(false)
+            // navigate to home page after sign out
+            history.push(HOME_PATH)
         }
-        localStorage.removeItem("loggedUser")
-        ctx.setIsLoggedIn(false)
-        ctx.setNavPage("Home")
     }
 
-    const selectPageHandler = (page) => {
-        ctx.setNavPage(page);
+    const hideCheckbox = () => {
         displayCheckboxRef.current.checked = false;
     }
+
     return (
         <header className={css.header}>
             <div className={`wrapper ${css.header__wrapper}`}>
@@ -43,22 +43,29 @@ const MainHeader = ({ navBarPages }) => {
                 </label>
                 <div className={`${css.box} ${css.box__navBar}`}>
                     <nav className={css.nav}>
-                        {ctx.isLoggedIn && <ul className={css.header__list}>
-                            {navBarPages.map(page => {
-                                return <li
-                                    className={`${css.header__item} ${ctx.navPage === page ? css.active : ""}`}
-                                    onClick={() => selectPageHandler(page)}
-                                    key={uuid()}
-                                >
-                                    {page}
+                        {ctx.isLoggedIn &&
+                            <ul className={css.header__list}>
+                                <li className={css.header__item}>
+                                    <NavLink to={HOME_PATH} className={css.header__NavLink} activeClassName={css.active} onClick={hideCheckbox}>Home</NavLink>
                                 </li>
-                            })}
-                        </ul>}
+                                <li className={css.header__item}>
+                                    <NavLink to={COUNTRIES_PATH} className={css.header__NavLink} activeClassName={css.active} onClick={hideCheckbox}>Countries</NavLink>
+                                </li>
+                                <li className={css.header__item}>
+                                    <NavLink to={USERS_PATH} className={css.header__NavLink} activeClassName={css.active} onClick={hideCheckbox}>Users</NavLink>
+                                </li>
+                            </ul>
+                        }
                         <div className={css.actions}>
                             <button
                                 className={`${css.button} ${!ctx.isLoggedIn ? css.signInBtn : ""}`}
-                                onClick={logFunction}>
-                                {!ctx.isLoggedIn ? "Sign in" : "Sign out"}
+                                onClick={logFunction}
+                            >
+                                {ctx.isLoggedIn
+                                    ? "Sign out"
+                                    : <Link className={css.sign__link} to={SIGN_IN_PATH}>
+                                        Sign in
+                                    </Link>}
                             </button>
                             {!ctx.isLoggedIn && <VscArrowUp className={css.arrowUp} />}
                         </div>

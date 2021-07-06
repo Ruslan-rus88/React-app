@@ -3,10 +3,9 @@
 //----------- Variables ------------
 $main-color-light: #fff;
 $main-color-dark: rgb(34, 54, 68);
-$bg-color-light: rgba(255, 255, 255, 1);
-$bg-color-light-06: rgba(255, 255, 255, 0.6);
-$bg-color-orange: rgb(222, 143, 16);
-$bg-hover-color-orange: rgb(255, 157, 0);
+$main-color-light-06: rgba(255, 255, 255, 0.6);
+$main-color-orange: rgb(222, 143, 16);
+$main-hover-color-orange: rgb(255, 157, 0);
 //----------- Variables - END ------------
 
 //----------- reset ------------
@@ -155,7 +154,7 @@ body {
 
 button {
   padding: 10px 20px;
-  background-color: $bg-color-orange;
+  background-color: $main-color-orange;
   color: $main-color-light;
   border: none;
   font-size: 1.2rem;
@@ -166,7 +165,7 @@ button {
 
 button:focus,
 button:hover {
-  background-color: $bg-hover-color-orange;
+  background-color: $main-hover-color-orange;
   outline: none;
 }
 
@@ -176,4 +175,8 @@ button:hover {
   max-width: 1200px;
 }
 
+a {
+  color: $main-color-light;
+  text-decoration: none;
+}
 //----------- Basic Styles - END ------------

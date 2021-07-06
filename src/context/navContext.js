@@ -7,7 +7,8 @@ const NavContext = React.createContext({
     setIsLoggedIn: () => { },
     navPage: "Home",
     setNavPage: () => { },
-    navBarPages: []
+    navBarPages: [],
+    setError: () => { },
 })
 
 export default NavContext;

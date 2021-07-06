@@ -58,16 +58,19 @@
   margin-right: 20px;
 }
 .header__item {
+}
+
+.header__NavLink {
   cursor: pointer;
   transition: 0.2s;
 }
 
-.header__item:hover {
+.header__NavLink:hover {
   color: rgb(55, 148, 174);
 }
 
 .active {
-  color: $bg-color-orange;
+  color: $main-color-orange;
 }
 
 .actions {
@@ -125,13 +128,13 @@
   }
 
   .display__checkbox:checked ~ .display__label {
-    color: $bg-color-orange;
+    color: $main-color-orange;
   }
 
   .display__checkbox:checked ~ .box__navBar {
     transform: translateX(0);
     opacity: 1;
-    border-top: 1px solid $bg-color-orange;
+    border-top: 1px solid $main-color-orange;
   }
 
   .nav {

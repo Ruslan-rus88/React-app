@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import css from "./countries.module.scss"
 import { v4 as uuidv4 } from "uuid"
 import CountryCard from './country-card';
+import NavContext from '../../context/navContext';
+import { Link, Route, useHistory } from 'react-router-dom';
+import { COUNTRIES_PATH } from '../../routes/paths';
 
 /*
  todo:
@@ -11,18 +14,19 @@ import CountryCard from './country-card';
 go to sleep :)
 */
 
-const Countries = ({ setError }) => {
+const Countries = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [inputCountry, setInputCountry] = useState("");
     const [requestedCountry, setRequestedCountry] = useState(undefined);
-    const [displayedCountry, setDisplayedCountry] = useState(undefined);
     const [allCountriesList, setAllCountriesList] = useState(undefined);
-    // used to save the list before displaying country card, to get it back after closing the card
-    const [previousCountriesList, setPreviousCountriesList] = useState(undefined);
 
     // used to reset the sort filter after changing the region
     const sortRef = useRef();
     const regionRef = useRef();
+
+    const history = useHistory()
+
+    const ctx = useContext(NavContext)
 
     const fetchCountriesHandler = async () => {
         try {
@@ -38,7 +42,7 @@ const Countries = ({ setError }) => {
             setAllCountriesList(data)
             setIsLoading(false)
         } catch (error) {
-            setError({
+            ctx.setError({
                 title: "Loading Error", errorMessage: error.message
             })
             console.log(error.message);
@@ -57,7 +61,7 @@ const Countries = ({ setError }) => {
             return item.name.toLowerCase().includes(inputCountry.toLowerCase())
         })]
         if (searchedCountries.length === 0) {
-            setError({
+            ctx.setError({
                 title: "Search Error", errorMessage: "No countries found! Please search again"
             })
             return;
@@ -71,7 +75,6 @@ const Countries = ({ setError }) => {
     }
 
     const selectRegionHandler = (e) => {
-        setPreviousCountriesList(requestedCountry)
         sortRef.current.value = "None"
         if (e.target.value === "All") {
             setRequestedCountry(allCountriesList)
@@ -99,9 +102,8 @@ const Countries = ({ setError }) => {
     }
 
     const selectCountryHandler = (country) => {
-        setPreviousCountriesList(requestedCountry)
-        setDisplayedCountry(country);
-        setRequestedCountry(undefined)
+        ctx.setDisplayedCountry(country);
+        history.push(`${COUNTRIES_PATH}/${country.name}`)
     }
 
     return (
@@ -169,26 +171,28 @@ const Countries = ({ setError }) => {
                     <div className={css.results}>Select the country to find more information about it!</div>
                     <ul className={css.list}>
                         {requestedCountry.map(country => {
-                            return <li
-                                key={uuidv4()}
-                                onClick={() => selectCountryHandler(country)}
-                                className={css.item}>
-                                <div className={css.box_country}>
-                                    <h3 className={css.countryName}>{country.name}</h3>
-                                    <img src={country.flag} alt={`country.name flag`} className={css.flag} />
-                                </div>
-                            </li>
+                            return (
+                                <React.Fragment key={uuidv4()}>
+                                    <li className={css.item}>
+                                        <Link
+                                            to={`${COUNTRIES_PATH}/${country.name}`}
+                                            className={css.box_country}
+                                            onClick={() => ctx.setDisplayedCountry(country)}>
+                                            <h3 className={css.countryName}>{country.name}</h3>
+                                            <img src={country.flag} alt={`country.name flag`} className={css.flag} />
+                                        </Link>
+                                    </li>
+                                </React.Fragment>
+                            )
                         })}
                     </ul>
                 </React.Fragment>}
             {
-                displayedCountry &&
-                <CountryCard
-                    displayedCountry={displayedCountry}
-                    setDisplayedCountry={setDisplayedCountry}
-                    setRequestedCountry={setRequestedCountry}
-                    previousCountriesList={previousCountriesList} />
-            }
+                allCountriesList && allCountriesList.map(country => (
+                    <Route path={`${COUNTRIES_PATH}/${country.name}`} key={uuidv4()}>
+                        <CountryCard displayedCountry={country} />
+                    </Route>
+                ))}
         </div >
     )
 }

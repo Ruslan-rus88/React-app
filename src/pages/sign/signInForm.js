@@ -1,12 +1,14 @@
 import React, { useReducer, useContext, useEffect } from 'react'
-import css from "./signIn.module.scss"
+import css from "./sign.module.scss"
 import NavContext from '../../context/navContext'
+import { useHistory } from "react-router-dom"
+import { HOME_PATH } from '../../routes/paths'
 
 const initialState = {
     email: "",
-    emailIsValid: false,
+    emailIsValid: true,
     password: "",
-    passwordIsValid: false,
+    passwordIsValid: true,
     loggedUser: {}
 }
 
@@ -14,9 +16,11 @@ const reducer = (state, action) => {
     const emailRE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     switch (action.type) {
         case "updateEmail":
-            return { ...state, email: action.email, emailIsValid: emailRE.test(action.email) }
+            // return { ...state, email: action.email, emailIsValid: emailRE.test(action.email) }
+            return { ...state, email: action.email, emailIsValid: true }
         case "updatePassword":
-            return { ...state, password: action.password, passwordIsValid: action.password.trim().length >= 6 }
+            // return { ...state, password: action.password, passwordIsValid: action.password.trim().length >= 6 }
+            return { ...state, password: action.password, passwordIsValid: true }
         case "submit":
             let users = localStorage.getItem("logged-users")
             users = JSON.parse(users)
@@ -27,10 +31,17 @@ const reducer = (state, action) => {
                     if (user.email === state.email && user.password === state.password) {
                         loggedUser = user
                         localStorage.setItem("loggedUser", JSON.stringify(user))
+                    } else {
+
                     }
                 })
             };
-            return { ...initialState, loggedUser: loggedUser };
+            return {
+                ...initialState,
+                loggedUser: loggedUser,
+                emailIsValid: emailRE.test(state.email),
+                passwordIsValid: state.password.trim().length >= 6
+            };
         default:
             return;
     }
@@ -39,6 +50,7 @@ const reducer = (state, action) => {
 
 const SignInForm = () => {
 
+    const history = useHistory()
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const ctx = useContext(NavContext)
@@ -46,8 +58,8 @@ const SignInForm = () => {
     useEffect(() => {
         if (state.loggedUser !== ctx.loggedUser && state.loggedUser.email) {
             ctx.setLoggedUser(state.loggedUser)
-            ctx.setNavPage("Home")
             ctx.setIsLoggedIn(true)
+            history.push(HOME_PATH)
         }
     }, [state.loggedUser])
 
@@ -62,6 +74,7 @@ const SignInForm = () => {
         <form className={css.sign__form} onSubmit={submitHandler}>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="text"
                     className={`${css.signInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
                     id="signup_email"
@@ -71,6 +84,7 @@ const SignInForm = () => {
             </div>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="password"
                     className={`${css.signInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
                     id="signup_password"

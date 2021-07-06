@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { v4 as uuid } from 'uuid';
 import { VscTrash } from "react-icons/vsc";
 import css from "./users.module.scss"
+import NavContext from "../../context/navContext";
 // import wrapper from "../helpers/wrapper";
 
-const Users = ({ setError }) => {
+const Users = () => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [users, setUsers] = useState([])
     const [validFirstName, setValidFirstName] = useState(true)
     const [validLastName, setValidLastName] = useState(true)
+
+    const ctx = useContext(NavContext)
 
     useEffect(() => {
         let usersList = localStorage.getItem("usersList")
@@ -32,7 +35,7 @@ const Users = ({ setError }) => {
         const LastNameLength = lastName.trim().length;
 
         if (FirstNameLength < 1 && LastNameLength < 1) {
-            setError({
+            ctx.setError({
                 title: "Wrong input",
                 errorMessage: "Please enter valid names!"
             });
@@ -41,7 +44,7 @@ const Users = ({ setError }) => {
             return;
         }
         if (FirstNameLength < 1) {
-            setError({
+            ctx.setError({
                 title: "Wrong input",
                 errorMessage: "Please enter a valid first name!"
             });
@@ -49,7 +52,7 @@ const Users = ({ setError }) => {
             return;
         }
         if (LastNameLength < 1) {
-            setError({
+            ctx.setError({
                 title: "Wrong input",
                 errorMessage: "Please enter a valid last name!"
             });

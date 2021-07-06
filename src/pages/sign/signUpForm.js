@@ -1,15 +1,18 @@
-import React, { useReducer } from 'react'
-import css from "./signIn.module.scss"
+import React, { useReducer, useEffect } from 'react'
+import css from "./sign.module.scss"
+import { SIGN_IN_PATH } from '../../routes/paths'
+import { useHistory } from 'react-router-dom'
 
 const initialState = {
     name: "",
-    nameIsValid: false,
+    nameIsValid: true,
     lastName: "",
-    lastNameIsValid: false,
+    lastNameIsValid: true,
     email: "",
-    emailIsValid: false,
+    emailIsValid: true,
     password: "",
-    passwordIsValid: false
+    passwordIsValid: true,
+    userAdded: false
 }
 
 const reducer = (state, action) => {
@@ -26,7 +29,7 @@ const reducer = (state, action) => {
         case "submit":
             let users = localStorage.getItem("logged-users")
             users = JSON.parse(users)
-            // console.log("users: ", users);
+
             let usersList = [{
                 name: state.name,
                 lastName: state.lastName,
@@ -37,6 +40,7 @@ const reducer = (state, action) => {
             if (users) {
                 // check if the user already exist in local storage
                 let test = users.filter(user => user.email === state.email);
+                console.log("test: ", test);
                 if (test.length !== 0) {
                     return initialState;
                 } else {
@@ -44,7 +48,7 @@ const reducer = (state, action) => {
                 }
             }
             localStorage.setItem("logged-users", JSON.stringify(usersList))
-            return initialState;
+            return { ...initialState, userAdded: true };
         default:
             return;
     }
@@ -52,20 +56,31 @@ const reducer = (state, action) => {
 
 const SignUpForm = () => {
 
+    const history = useHistory();
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         if (state.nameIsValid && state.lastNameIsValid && state.emailIsValid && state.passwordIsValid) {
-            dispatch({ type: "submit" })
+            await dispatch({ type: "submit" })
+            console.log("test");
+
         }
     }
+
+    // navigate to signIn page after successful sign in
+    useEffect(() => {
+        if (state.userAdded) {
+            history.push(SIGN_IN_PATH)
+        }
+    }, [state.userAdded])
 
     return (
         <form className={css.sign__form} onSubmit={submitHandler}>
             {/* <button onClick={() => { console.log(state) }}>test</button> */}
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="text"
                     className={`${css.signInput} ${!state.nameIsValid ? css.invalidInput : ""}`}
                     id="signup_name"
@@ -75,6 +90,7 @@ const SignUpForm = () => {
             </div>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="text"
                     className={`${css.signInput} ${!state.lastNameIsValid ? css.invalidInput : ""}`}
                     id="signup_lastName"
@@ -84,6 +100,7 @@ const SignUpForm = () => {
             </div>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="text"
                     className={`${css.signInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
                     id="signup_email"
@@ -93,6 +110,7 @@ const SignUpForm = () => {
             </div>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="password"
                     className={`${css.signInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
                     id="signup_password"
