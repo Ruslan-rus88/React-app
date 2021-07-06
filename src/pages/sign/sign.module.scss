@@ -89,21 +89,27 @@
 }
 
 .sign__action_btn {
-  font-weight: 400;
-  font-size: 0.8rem;
-  color: rgba(34, 54, 68, 0.8);
-  /* background-color: rgb(255, 255, 255, 0.4); */
   background-color: transparent;
-  border-bottom: 1px solid rgb(34, 54, 68);
-  border-radius: 0;
-  padding: 5px;
   float: right;
+  padding: 0;
 
   &:hover,
   &:focus {
-    border-bottom: 1px solid rgb(222, 143, 16);
-    color: rgb(222, 143, 16);
     background: transparent;
+  }
+}
+
+.sign__link {
+  font-weight: 400;
+  font-size: 0.8rem;
+  border-bottom: 1px solid $main-color-dark;
+  padding: 5px;
+  color: $main-color-dark;
+
+  &:hover,
+  &:focus {
+    border-bottom: 1px solid $main-color-orange;
+    color: $main-color-orange;
   }
 }
 

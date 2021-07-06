@@ -74,6 +74,7 @@ const SignInForm = () => {
         <form className={css.sign__form} onSubmit={submitHandler}>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="text"
                     className={`${css.signInput} ${!state.emailIsValid ? css.invalidInput : ""}`}
                     id="signup_email"
@@ -83,6 +84,7 @@ const SignInForm = () => {
             </div>
             <div className={css.sign__Block}>
                 <input
+                    required
                     type="password"
                     className={`${css.signInput} ${!state.passwordIsValid ? css.invalidInput : ""}`}
                     id="signup_password"

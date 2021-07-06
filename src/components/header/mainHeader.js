@@ -2,13 +2,11 @@ import React, { useContext, useRef } from "react"
 import css from "./mainHeader.module.scss"
 import navContext from "../../context/navContext"
 import { VscMenu, VscArrowUp } from "react-icons/vsc";
-import { HOME_PATH, COUNTRIES_PATH, USERS_PATH, SIGN_PATH } from "../../routes/paths";
-import { Link, NavLink, useParams, useHistory } from "react-router-dom";
+import { HOME_PATH, COUNTRIES_PATH, USERS_PATH, SIGN_IN_PATH } from "../../routes/paths";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 const MainHeader = () => {
-    const params = useParams();
     const history = useHistory();
-    console.log("params: ", params);
 
     const ctx = useContext(navContext)
 
@@ -23,6 +21,10 @@ const MainHeader = () => {
             // navigate to home page after sign out
             history.push(HOME_PATH)
         }
+    }
+
+    const hideCheckbox = () => {
+        displayCheckboxRef.current.checked = false;
     }
 
     return (
@@ -44,13 +46,13 @@ const MainHeader = () => {
                         {ctx.isLoggedIn &&
                             <ul className={css.header__list}>
                                 <li className={css.header__item}>
-                                    <NavLink to={HOME_PATH} className={css.header__NavLink} activeClassName={css.active} >Home</NavLink>
+                                    <NavLink to={HOME_PATH} className={css.header__NavLink} activeClassName={css.active} onClick={hideCheckbox}>Home</NavLink>
                                 </li>
                                 <li className={css.header__item}>
-                                    <NavLink to={COUNTRIES_PATH} className={css.header__NavLink} activeClassName={css.active} >Countries</NavLink>
+                                    <NavLink to={COUNTRIES_PATH} className={css.header__NavLink} activeClassName={css.active} onClick={hideCheckbox}>Countries</NavLink>
                                 </li>
                                 <li className={css.header__item}>
-                                    <NavLink to={USERS_PATH} className={css.header__NavLink} activeClassName={css.active} >Users</NavLink>
+                                    <NavLink to={USERS_PATH} className={css.header__NavLink} activeClassName={css.active} onClick={hideCheckbox}>Users</NavLink>
                                 </li>
                             </ul>
                         }
@@ -61,7 +63,7 @@ const MainHeader = () => {
                             >
                                 {ctx.isLoggedIn
                                     ? "Sign out"
-                                    : <Link className={css.sign__link} to={SIGN_PATH}>
+                                    : <Link className={css.sign__link} to={SIGN_IN_PATH}>
                                         Sign in
                                     </Link>}
                             </button>
