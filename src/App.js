@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ErrorModal from "./components/errorModal/errorModal";
 import MainHeader from "./components/header/mainHeader";
 import navContext from "./context/navContext";
+import { BrowserRouter as Router } from "react-router-dom";
+import { routes } from './routes/routes';
 
 // routes
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -62,52 +64,41 @@ function App() {
   }, [setIsLoggedIn])
 
   return (
-    <navContext.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        setIsLoggedIn: setIsLoggedInFunction,
-        loggedUser: loggedUser,
-        setLoggedUser: setLoggedUserFunction,
-        setError: setError,
-        displayedCountry: displayedCountry,
-        setDisplayedCountry: setDisplayedCountryFunction,
-      }}>
+    <Router>
+      <navContext.Provider
+        value={{
+          isLoggedIn: isLoggedIn,
+          setIsLoggedIn: setIsLoggedInFunction,
+          loggedUser: loggedUser,
+          setLoggedUser: setLoggedUserFunction,
+          setError: setError,
+          displayedCountry: displayedCountry,
+          setDisplayedCountry: setDisplayedCountryFunction,
+        }}>
+        <MainHeader />
 
-      <MainHeader />
-      <Switch>
-        <Route path="/" exact >
-          <Redirect to={HOME_PATH} />
-        </Route>
-        <Route path="/React-app" exact >
-          <Redirect to={HOME_PATH} />
-        </Route>
-        <Route path={HOME_PATH} >
-          <Home />
-        </Route>
-        <Route path={COUNTRIES_PATH} exact >
-          <Countries />
-        </Route>
-        <Route path={`${COUNTRIES_PATH}/:countryName`} >
-          <CountryCard />
-        </Route>
-        <Route path={USERS_PATH} >
-          <Users />
-        </Route>
-        <Route path={SIGN_IN_PATH} >
-          <SignIn />
-        </Route>
-        <Route path={SIGN_UP_PATH} >
-          <SignUp />
-        </Route>
-      </Switch>
+        <Switch>
+          {routes.map((route, i) => (
+            <Route
+              path={route.path}
+              exact={route.exact}
+              key={i}
+              render={props => (
+                // pass the sub-routes down to keep nesting
+                <route.component {...props} routes={route.routes}/>
+              )}
+            />
+          ))}
+        </Switch>
 
-      {error &&
+        {error &&
         <ErrorModal
           title={error.title}
           errorMessage={error.errorMessage}
           resetError={resetError} />
-      }
-    </navContext.Provider>
+        }
+      </navContext.Provider>
+    </Router>
   );
 }
 
